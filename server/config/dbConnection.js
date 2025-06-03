@@ -4,10 +4,14 @@ mongoose.set('strictQuery',false)
 
 const connectionToDB = async (req,res) =>{
   try {
-    const {connection} = await mongoose.connect(process.env.MONGO_URI)
+    const {connection} = await mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 
   if(connection){
     console.log(`Connected to MongoDB: ${connection.host}`)
+
   }
 
   } catch (e) {
