@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import {register,login,logout,getprofile,forgotPassword,resetPassword, changePassword, updateUser} from '../controllers/user.controller.js'
-import isLoggedIn from '../middlewares/auth.middleware.js'
+import {isLoggedIn} from '../middlewares/auth.middleware.js'
 import upload from '../middlewares/multer.middleware.js'
 
 router.post('/register',upload.single("avatar"),register)

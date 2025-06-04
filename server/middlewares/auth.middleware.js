@@ -14,4 +14,15 @@ const isLoggedIn = async (req,res,next)=>{
     next( )
 }
 
-export default isLoggedIn 
+const authorizedRoles = (...roles) => async (req, res, next) =>{
+   const currentUserRole = req.user.role
+   console.log(currentUserRole)
+   if(!roles.includes(currentUserRole)){
+    return next(new AppError("you do not have permission to perform this action",403))
+}
+
+next()
+}
+export {
+    isLoggedIn,authorizedRoles
+}

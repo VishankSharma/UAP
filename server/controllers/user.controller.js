@@ -15,7 +15,7 @@ import { assert } from "console";
 
 
 const register =async (req,res,next)=>{
-    const {name,email,password} = req.body;
+    const {name,email,password,role} = req.body;
 
     if(!name || !email || !password){
         return next(new AppError('All fields are required',400));
@@ -30,6 +30,7 @@ const register =async (req,res,next)=>{
     const newUser = await User.create({name,
         email,
         password,
+        role,
         avatar:{
             public_id:email,
             secure_url:'https://res.cloudinary.com/dfwqzjz4j/image/upload'
@@ -79,7 +80,7 @@ const register =async (req,res,next)=>{
    })
 
 }
-const login = async (req,res)=>{
+const login = async (req,res,next)=>{
 try {
     
     const {email,password} = req.body
