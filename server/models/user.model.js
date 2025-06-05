@@ -39,7 +39,12 @@ match: [/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, 'Please enter a valid email address']
         default:'USER'
     },
     forgotPasswordToken:String,
-    forgotPasswordExpiry: Date
+    forgotPasswordExpiry: Date,
+    subscription:{
+      id:String,
+      status:String
+
+    }
 },{
     timestamps:true
 })
