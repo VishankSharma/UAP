@@ -1,37 +1,44 @@
 import express from 'express';
-const app = express()
+const app = express();
 import cors from 'cors';
-import  cookieParser from 'cookie-parser'
-import {config} from 'dotenv'
-import morgan from 'morgan'
-import userRoutes from './routes/userRoutes.js'
-import courseRoutes from './routes/course.routes.js'
+import cookieParser from 'cookie-parser';
+import { config } from 'dotenv';
+import morgan from 'morgan';
+
+import userRoutes from './routes/userRoutes.js';
+import issueRoutes from './routes/issueRoutes.js';
+import departmentRoutes from './routes/departmentRoutes.js'; 
+
 import errorMiddleware from './middlewares/error.middleware.js';
-import paymentRoutes from './routes/payment.routes.js'
 
-config()
+config();
 
-app.use(express.json())
-app.use(cookieParser())
-app.use(express.urlencoded({extended:true}))
+// ================= Middlewares =================
 
-app.use(cors({
-   origin : [process.env.FRONTEND_URL],
-   credentials:true
-}))
+// body parsers
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+// cookies
+app.use(cookieParser());
 
-app.use(morgan('dev'))
+// cors
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_URL],
+    credentials: true,
+  })
+);
 
-app.use('/api/v1/user', userRoutes)
-app.use('/api/v1/courses', courseRoutes)
-app.use('/api/v1/payments', paymentRoutes)
+// logging
+app.use(morgan('dev'));
 
+// ================= Routes =================
+app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/issue', issueRoutes);
+app.use('/api/v1/departments', departmentRoutes); 
 
-// app.all('*', (req, res) => {
-//     res.status(404).send('404 OOPS!! Page Not Found')
-// })
-
+// ================= Error Handler =================
 app.use(errorMiddleware);
 
-export default app 
+export default app;
